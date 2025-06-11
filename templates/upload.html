@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        form { max-width: 500px; margin: auto; }
+        label { display: block; margin-top: 10px; }
+        input, select { width: 100%; padding: 8px; margin-top: 4px; }
+        button { margin-top: 15px; padding: 10px 15px; }
+    </style>
+</head>
+<body>
+    <h1>Generate a Custom QR Code</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <label for="link">Link (URL):</label>
+        <input type="url" id="link" name="link" required>
+
+        <label for="logo">Upload Image (Logo):</label>
+        <input type="file" id="logo" name="logo" accept="image/*">
+
+        <label for="box_size">Box Size:</label>
+        <input type="number" id="box_size" name="box_size" value="10" min="1">
+
+        <label for="border">Border Size:</label>
+        <input type="number" id="border" name="border" value="4" min="0">
+
+        <label for="error_correction">Error Correction:</label>
+        <select id="error_correction" name="error_correction">
+            <option value="L">Low (7%)</option>
+            <option value="M">Medium (15%)</option>
+            <option value="Q">Quartile (25%)</option>
+            <option value="H" selected>High (30%)</option>
+        </select>
+
+        <label for="fill_color">Fill Color:</label>
+        <input type="text" id="fill_color" name="fill_color" value="black">
+
+        <label for="back_color">Background Color:</label>
+        <input type="text" id="back_color" name="back_color" value="white">
+
+        <button type="submit">Generate QR Code</button>
+    </form>
+</body>
+</html>

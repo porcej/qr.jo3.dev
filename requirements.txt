@@ -1,0 +1,5 @@
+# File: requirements.txt
+# -------------------
+Flask
+qrcode[pil]
+Pillow
