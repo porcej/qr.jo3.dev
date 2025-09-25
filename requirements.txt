@@ -1,5 +1,5 @@
 # File: requirements.txt
 # -------------------
-Flask
-qrcode[pil]
-Pillow
+Flask==3.1.2
+qrcode[pil]==8.2
+Pillow==11.3.0
