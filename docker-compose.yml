@@ -15,6 +15,12 @@ services:
       - GUNICORN_LOG_LEVEL=info
     volumes:
       - ./static/uploads:/app/static/uploads
+    healthcheck:
+      test: ["CMD", "sh", "-c", "curl -fsS http://localhost:5000/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
     restart: unless-stopped
     labels:
       - "traefik.enable=true"

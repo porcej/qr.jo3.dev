@@ -19,6 +19,10 @@ ERROR_CORRECTION_MAP = {
     'H': ERROR_CORRECT_H,
 }
 
+@app.get("/health")
+def health():
+    return {"ok": True}, 200
+
 @app.route('/', methods=['GET', 'POST'])
 def upload():
     if request.method == 'POST':
