@@ -19,9 +19,10 @@ ERROR_CORRECTION_MAP = {
     'H': ERROR_CORRECT_H,
 }
 
-@app.route('/health', methods=['GET', 'POST'])
+@app.route('/health')
 def health():
-    return {"ok": True}, 200
+    """Health check endpoint for Docker health checks"""
+    return {'status': 'healthy', 'service': 'qr-generator'}, 200
 
 @app.route('/', methods=['GET', 'POST'])
 def upload():

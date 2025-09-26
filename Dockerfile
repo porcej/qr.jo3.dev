@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y \
     g++ \
     libjpeg-dev \
     zlib1g-dev \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements file
