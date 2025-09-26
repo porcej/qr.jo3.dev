@@ -3,8 +3,8 @@ services:
     build: .
     container_name: qr-generator-app
     # Remove host port publishing (optional but recommended)
-    ports:
-      - "9001:5000"
+    # ports:
+    #   - "9001:5000"
     expose:
       - "5000"
     environment:
@@ -22,22 +22,22 @@ services:
       # HTTP router
       - "traefik.http.routers.app1-http.rule=Host(`qr.jo3.dev`)"
       - "traefik.http.routers.app1-http.entrypoints=web"
-      - "traefik.http.routers.app1-http.middlewares=app1-redirect"
+      # - "traefik.http.routers.app1-http.middlewares=app1-redirect"
       - "traefik.http.routers.app1-http.service=app1"
 
       # HTTPS router
-      - "traefik.http.routers.app1-https.rule=Host(`qr.jo3.dev`)"
-      - "traefik.http.routers.app1-https.entrypoints=websecure"
-      - "traefik.http.routers.app1-https.tls.certresolver=le"
-      - "traefik.http.routers.app1-https.service=app1"
+      # - "traefik.http.routers.app1-https.rule=Host(`qr.jo3.dev`)"
+      # - "traefik.http.routers.app1-https.entrypoints=websecure"
+      # - "traefik.http.routers.app1-https.tls.certresolver=le"
+      # - "traefik.http.routers.app1-https.service=app1"
 
       # HTTP→HTTPS redirect middleware
-      - "traefik.http.middlewares.app1-redirect.redirectscheme.scheme=https"
+      # - "traefik.http.middlewares.app1-redirect.redirectscheme.scheme=https"
 
       # HTTP router (needed for ACME http-01 and redirects)
-      - "traefik.http.routers.app1-http.rule=Host(`qr.jo3.dev`)"
-      - "traefik.http.routers.app1-http.entrypoints=web"
-      - "traefik.http.routers.app1-http.middlewares=app1-redirect"
+      # - "traefik.http.routers.app1-http.rule=Host(`qr.jo3.dev`)"
+      # - "traefik.http.routers.app1-http.entrypoints=web"
+      # - "traefik.http.routers.app1-http.middlewares=app1-redirect"
       
       # # HTTPS router
       # - "traefik.http.routers.app1-https.rule=Host(`qr.jo3.dev`)"
