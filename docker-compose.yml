@@ -35,7 +35,6 @@ services:
       - "traefik.http.routers.app1.entrypoints=websecure"
       - "traefik.http.routers.app1.tls.certresolver=le"
       - "traefik.http.services.app1.loadbalancer.server.port=9001"
-    restart: unless-stopped
 networks:
   default:
     external: true
