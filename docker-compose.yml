@@ -20,7 +20,7 @@ services:
       - "traefik.enable=true"
 
       # HTTP router
-      - "traefik.http.routers.app1-http.rule=Host(`qr.jo3.dev`)"
+      - 'traefik.http.routers.app1-http.rule=Host(`qr.jo3.dev`)'
       - "traefik.http.routers.app1-http.entrypoints=web"
       # - "traefik.http.routers.app1-http.middlewares=app1-redirect"
       - "traefik.http.routers.app1-http.service=app1"
