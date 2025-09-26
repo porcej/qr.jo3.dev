@@ -27,5 +27,5 @@ services:
       - "traefik.http.services.qr_jo3_dev.loadbalancer.server.port=5000"
 
 networks:
-  default:
-    name: proxy
+  proxy:
+    external: true
