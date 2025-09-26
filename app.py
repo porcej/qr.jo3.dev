@@ -19,7 +19,7 @@ ERROR_CORRECTION_MAP = {
     'H': ERROR_CORRECT_H,
 }
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/health', methods=['GET', 'POST'])
 def health():
     return {"ok": True}, 200
 
