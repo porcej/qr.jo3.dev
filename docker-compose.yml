@@ -1,11 +1,12 @@
-version: '3.8'
-
 services:
   qr-generator:
     build: .
     container_name: qr-generator-app
-    ports:
-      - "9001:5000"
+    # Remove host port publishing (optional but recommended)
+    # ports:
+    #   - "9001:5000"
+    expose:
+      - "5000"
     environment:
       - FLASK_ENV=production
       - FLASK_PORT=5000
@@ -13,66 +14,23 @@ services:
       - GUNICORN_WORKERS=2
       - GUNICORN_LOG_LEVEL=info
     volumes:
-      # Mount uploads directory to persist uploaded files
       - ./static/uploads:/app/static/uploads
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "sh", "-c", "python -c 'import os,requests; requests.get(f\"http://localhost:{os.environ.get(\"FLASK_PORT\",5000)}\")'"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-    # Optional: Add resource limits
-    deploy:
-      resources:
-        limits:
-          memory: 512M
-          cpus: '0.5'
-        reservations:
-          memory: 256M
-          cpus: '0.25'
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.app1.rule=Host(`qr.jo3.dev`)"
-      - "traefik.http.routers.app1.entrypoints=websecure"
-      - "traefik.http.routers.app1.tls.certresolver=le"
-      - "traefik.http.services.app1.loadbalancer.server.port=9001"
+      # HTTP→HTTPS redirect middleware
+      - "traefik.http.middlewares.app1-redirect.redirectscheme.scheme=https"
+      # HTTP router (needed for ACME http-01 and redirects)
+      - "traefik.http.routers.app1-http.rule=Host(`qr.jo3.dev`)"
+      - "traefik.http.routers.app1-http.entrypoints=web"
+      - "traefik.http.routers.app1-http.middlewares=app1-redirect"
+      # HTTPS router
+      - "traefik.http.routers.app1-https.rule=Host(`qr.jo3.dev`)"
+      - "traefik.http.routers.app1-https.entrypoints=websecure"
+      - "traefik.http.routers.app1-https.tls.certresolver=le"
+      # Target the container's internal port
+      - "traefik.http.services.app1.loadbalancer.server.port=5000"
 networks:
   default:
     external: true
     name: proxy
-#   # Optional: Add a reverse proxy with Nginx
-#   nginx:
-#     image: nginx:alpine
-#     container_name: qr-generator-nginx
-#     ports:
-#       - "80:80"
-#       - "443:443"
-#     volumes:
-#       - ./nginx.conf:/etc/nginx/nginx.conf:ro
-#       - ./ssl:/etc/nginx/ssl:ro  # For SSL certificates if needed
-#     depends_on:
-#       - qr-generator
-#     restart: unless-stopped
-#     profiles:
-#       - production  # Only start with --profile production
-
-#   # Optional: Add Redis for caching (future enhancement)
-#   redis:
-#     image: redis:7-alpine
-#     container_name: qr-generator-redis
-#     ports:
-#       - "6379:6379"
-#     volumes:
-#       - redis_data:/data
-#     restart: unless-stopped
-#     profiles:
-#       - cache  # Only start with --profile cache
-
-# volumes:
-#   redis_data:
-#     driver: local
-
-# networks:
-#   default:
-#     name: qr-generator-network
