@@ -29,7 +29,17 @@ services:
         reservations:
           memory: 256M
           cpus: '0.25'
-
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app1.rule=Host(`qr.jo3.dev`)"
+      - "traefik.http.routers.app1.entrypoints=websecure"
+      - "traefik.http.routers.app1.tls.certresolver=le"
+      - "traefik.http.services.app1.loadbalancer.server.port=9001"
+    restart: unless-stopped
+networks:
+  default:
+    external: true
+    name: proxy
 #   # Optional: Add a reverse proxy with Nginx
 #   nginx:
 #     image: nginx:alpine
