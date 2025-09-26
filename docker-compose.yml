@@ -25,6 +25,8 @@ services:
       - "traefik.http.routers.qr_jo3_dev-http.entrypoints=web"
       - "traefik.http.routers.qr_jo3_dev-http.service=qr_jo3_dev"
       - "traefik.http.services.qr_jo3_dev.loadbalancer.server.port=5000"
+    networks:
+      - proxy
 
 networks:
   proxy:
